@@ -54,7 +54,7 @@ jobs:
         override: true
 
     - name: Build
-    - uses: actions-rs/cargo@v1
+      uses: actions-rs/cargo@v1
         with:
           use-cross: ${{ matrix.use-cross }}
           command: build
