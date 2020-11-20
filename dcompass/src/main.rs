@@ -72,7 +72,12 @@ async fn main() -> Result<()> {
     } else {
         include_str!("../../configs/default.json").to_owned()
     };
-    let (router, addr, verbosity) = init(serde_json::from_str(&config)?).compat().await?;
+    let (router, addr, verbosity) = init(
+        serde_json::from_str(&config)
+            .with_context(|| "Failed to parse the configuration file".to_string())?,
+    )
+    .compat()
+    .await?;
 
     SimpleLogger::new().with_level(verbosity).init()?;
 
