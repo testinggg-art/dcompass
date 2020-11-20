@@ -48,6 +48,12 @@ jobs:
         toolchain: stable
         target: x86_64-apple-darwin
 
+    - uses: actions-rs/install@v0.1
+      with:
+        crate: cross
+        version: latest
+        use-tool-cache: true
+
     - name: Build
       run: ./build.sh
 
