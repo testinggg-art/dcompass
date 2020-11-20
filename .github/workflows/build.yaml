@@ -23,7 +23,7 @@ jobs:
             use-cross: false
             artifact_name: target/release/dcompass
             asset_name: dcompass-linux-x86
-         - name: linux
+         - name: armv7
             os: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
             use-cross: true
