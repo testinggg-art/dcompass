@@ -3,6 +3,7 @@ on: [push, pull_request]
 name: Check, test, and bench
 
 jobs:
+  if: !(startsWith(github.event.head_commit.message, 'build:')
   check:
     name: Check
     runs-on: ubuntu-latest
