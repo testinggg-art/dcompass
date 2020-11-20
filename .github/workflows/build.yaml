@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         name: [
-	    armv7
+            armv7,
             linux,
             windows,
             macos,
