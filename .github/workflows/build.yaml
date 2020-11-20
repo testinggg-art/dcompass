@@ -65,10 +65,10 @@ jobs:
         prerelease: true
         files: |
           LICENSE
-          dcompass-x86_64-unknown-linux-musl.zip
-          dcompass-armv7-unknown-linux-muslabi.zip
-          dcompass-armv5te-unknown-linux-musleabi.zip
-          dcompass-x86_64-pc-windows-gnu.zip
-          dcompass-x86_64-apple-darwin.zip
+          dcompass-x86_64-unknown-linux-musl
+          dcompass-armv7-unknown-linux-muslabi
+          dcompass-armv5te-unknown-linux-musleabi
+          dcompass-x86_64-pc-windows-gnu
+          dcompass-x86_64-apple-darwin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

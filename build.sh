@@ -10,5 +10,4 @@ targetList=(
 
 for i in "${targetList[@]}"; do
 	cross build --release --locked --target "$i"
-	zip -j "$NAME"-"$i" ./target/"$i"/release/dcompass*
 done
