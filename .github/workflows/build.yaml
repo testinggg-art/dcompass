@@ -20,9 +20,9 @@ jobs:
         include:
           - name: linux
             os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
+            target: x86_64-unknown-linux-musl
             use-cross: false
-            artifact_name: target/x86_64-unknown-linux-gnu/release/dcompass
+            artifact_name: target/x86_64-unknown-linux-musl/release/dcompass
             asset_name: dcompass-linux-x86
           - name: armv7
             os: ubuntu-latest
