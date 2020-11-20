@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         name: [
+	    armv7
             linux,
             windows,
             macos,
@@ -18,14 +19,26 @@ jobs:
         include:
           - name: linux
             os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            use-cross: false
             artifact_name: target/release/dcompass
             asset_name: dcompass-linux-x86
+         - name: linux
+            os: ubuntu-latest
+            target: armv7-unknown-linux-gnueabihf
+            use-cross: true
+            artifact_name: target/release/dcompass
+            asset_name: dcompass-linux-armv7
           - name: windows
             os: windows-latest
+            target: x86_64-pc-windows-gnu
+            use-cross: false
             artifact_name: target/release/dcompass.exe
             asset_name: dcompass-windows-x86
           - name: macos
             os: macos-latest
+            target: x86_64-apple-darwin
+            use-cross: false
             artifact_name: target/release/dcompass
             asset_name: dcompass-macos-x86
 
@@ -36,13 +49,19 @@ jobs:
       with:
         profile: minimal
         toolchain: stable
+        target: ${{ matrix.target }}
+        override: true
 
     - name: Build
-      run: cargo build --release --locked
+    - uses: actions-rs/cargo@v1
+        with:
+          use-cross: ${{ matrix.use-cross }}
+          command: build
+          args: --release --locked --target ${{ matrix.target }}
 
     - name: Upload binaries to release
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.asset_name }}
         path: ${{ matrix.artifact_name }}
-        retention-days: 60
+        retention-days: 30
