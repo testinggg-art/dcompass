@@ -3,8 +3,8 @@ on: [push, pull_request]
 name: Check, test, and bench
 
 jobs:
-  if: !(startsWith(github.event.head_commit.message, 'build:')
   check:
+    if: !(startsWith(github.event.head_commit.message, 'build:')
     name: Check
     runs-on: ubuntu-latest
     steps:
@@ -19,6 +19,7 @@ jobs:
           command: check
 
   test:
+    if: !(startsWith(github.event.head_commit.message, 'build:')
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +34,7 @@ jobs:
           command: test
 
   bench:
+    if: !(startsWith(github.event.head_commit.message, 'build:')
     name: Benchmark
     runs-on: ubuntu-latest
     steps:
@@ -47,6 +49,7 @@ jobs:
           command: bench
 
   clippy:
+    if: !(startsWith(github.event.head_commit.message, 'build:')
     name: Clippy
     runs-on: ubuntu-latest
     steps:
