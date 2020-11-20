@@ -2,7 +2,7 @@
 
 targetList=(
 	"x86_64-unknown-linux-musl"
-	"armv7-unknown-linux-muslabi"
+	"armv7-unknown-linux-musleabi"
 	"armv5te-unknown-linux-musleabi"
 	"x86_64-pc-windows-gnu"
 )

@@ -57,12 +57,12 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         body: This is an automated build running for supported architechtures periodically.
-        tag_name: Build ${{ steps.date.outputs.date }}
+        name: Build ${{ steps.date.outputs.date }}
         prerelease: true
         files: |
           LICENSE
           dcompass-x86_64-unknown-linux-musl
-          dcompass-armv7-unknown-linux-muslabi
+          dcompass-armv7-unknown-linux-musleabi
           dcompass-armv5te-unknown-linux-musleabi
           dcompass-x86_64-pc-windows-gnu
       env:
