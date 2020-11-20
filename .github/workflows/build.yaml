@@ -42,12 +42,6 @@ jobs:
         toolchain: stable
         target: x86_64-pc-windows-gnu
 
-    - uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: stable
-        target: x86_64-apple-darwin
-
     - uses: actions-rs/install@v0.1
       with:
         crate: cross
@@ -69,6 +63,5 @@ jobs:
           dcompass-armv7-unknown-linux-muslabi
           dcompass-armv5te-unknown-linux-musleabi
           dcompass-x86_64-pc-windows-gnu
-          dcompass-x86_64-apple-darwin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

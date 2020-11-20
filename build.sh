@@ -5,7 +5,6 @@ targetList=(
 	"armv7-unknown-linux-muslabi"
 	"armv5te-unknown-linux-musleabi"
 	"x86_64-pc-windows-gnu"
-	"x86_64-apple-darwin"
 )
 
 for i in "${targetList[@]}"; do
