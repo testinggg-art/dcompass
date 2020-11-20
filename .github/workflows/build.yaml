@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     if: (startsWith(github.event.head_commit.message, 'build:') || (github.event_name == 'schedule'))
-    name: Automated build for ${{ matrix.os }}
+    name: Automated build for ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -28,7 +28,7 @@ jobs:
             os: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
             use-cross: true
-            artifact_name: target/release/dcompass
+            artifact_name: target/armv7-unknown-linux-gnueabihf/release/dcompass
             asset_name: dcompass-linux-armv7
           - name: windows
             os: windows-latest
