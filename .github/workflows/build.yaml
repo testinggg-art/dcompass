@@ -6,63 +6,63 @@ on:
 jobs:
   build:
     if: (startsWith(github.event.head_commit.message, 'build:') || (github.event_name == 'schedule'))
-    name: Automated build for ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        name: [
-            armv7,
-            linux,
-            windows,
-            macos,
-        ]
-
-        include:
-          - name: linux
-            os: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-            use-cross: false
-            artifact_name: target/x86_64-unknown-linux-musl/release/dcompass
-            asset_name: dcompass-linux-x86
-          - name: armv7
-            os: ubuntu-latest
-            target: armv7-unknown-linux-gnueabihf
-            use-cross: true
-            artifact_name: target/armv7-unknown-linux-gnueabihf/release/dcompass
-            asset_name: dcompass-linux-armv7
-          - name: windows
-            os: windows-latest
-            target: x86_64-pc-windows-gnu
-            use-cross: false
-            artifact_name: target/x86_64-pc-windows-gnu/release/dcompass.exe
-            asset_name: dcompass-windows-x86
-          - name: macos
-            os: macos-latest
-            target: x86_64-apple-darwin
-            use-cross: false
-            artifact_name: target/x86_64-apple-darwin/release/dcompass
-            asset_name: dcompass-macos-x86
-
+    name: Automated builds
+    runs-on: ubuntu-latest
     steps:
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%d%H')"
+
+    - name: Install musl
+      run: sudo apt-get install musl-tools
+
     - uses: actions/checkout@v1
 
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
         toolchain: stable
-        target: ${{ matrix.target }}
-        override: true
+        target: x86_64-unknown-linux-musl
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        target: armv7-unknown-linux-musleabi
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        target: armv5te-unknown-linux-musleabi
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        target: x86_64-pc-windows-gnu
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        target: x86_64-apple-darwin
 
     - name: Build
-      uses: actions-rs/cargo@v1
-      with:
-        use-cross: ${{ matrix.use-cross }}
-        command: build
-        args: --release --locked --target ${{ matrix.target }}
+      run: ./build.sh
 
-    - name: Upload binaries to release
-      uses: actions/upload-artifact@v2
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: ${{ matrix.asset_name }}
-        path: ${{ matrix.artifact_name }}
-        retention-days: 30
+        body: This is an automated build running for supported architechtures periodically.
+        tag_name: Build ${{ steps.date.outputs.date }}
+        prerelease: true
+        files: |
+          LICENSE
+          dcompass-x86_64-unknown-linux-musl.zip
+          dcompass-armv7-unknown-linux-muslabi.zip
+          dcompass-armv5te-unknown-linux-musleabi.zip
+          dcompass-x86_64-pc-windows-gnu.zip
+          dcompass-x86_64-apple-darwin.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
